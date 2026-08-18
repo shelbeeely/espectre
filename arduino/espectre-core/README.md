@@ -120,11 +120,20 @@ git submodule update --init arduino/freeink-sdk
 
 ## Caveats from the port
 
-- This has been reviewed for correctness against the ESPHome component's
-  logic but **not build- or hardware-tested** in this environment (no ESP32
-  Arduino toolchain was available here). Please build and flash it before
-  relying on it, and open an issue against the main repo with anything that
-  doesn't compile or behave as documented above.
+- Both `espectre-core` on its own and the `freeink_motion_display` example
+  have been build-verified against a real pioarduino
+  espressif32/Arduino-ESP32 toolchain (esp32-s3-devkitc1-n16r8 for the
+  library, the Xteink X4's esp32-c3-devkitm-1 for the example) - both
+  produce a valid `firmware.bin`. This has not been flashed to real
+  hardware, so runtime behavior (CSI capture, calibration timing, display
+  output) is unverified; please test on-device before relying on it, and
+  open an issue against the main repo with anything that doesn't behave as
+  documented above.
+- `GainLockMode::DISABLED` (the ESPHome component's name) is
+  `GainLockMode::OFF` in this port: Arduino's `esp32-hal-gpio.h` `#define`s
+  `DISABLED` as a raw macro (a GPIO drive-mode constant), which textually
+  collides with an enumerator of that name once `Arduino.h` is in the
+  include chain.
 - The ML detector's weights (`ml_weights.h`) are copied unchanged from the
   ESPHome component; they were trained against the same CSI processing
   pipeline ported here, so behavior should be identical.
