@@ -1,4 +1,5 @@
 # PlatformIO
+.pio/
 test/.pio/
 test/.vscode/
 test/.clang_complete
