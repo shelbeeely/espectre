@@ -109,8 +109,14 @@ to the PlatformIO registry under your own name).
 `examples/freeink_motion_display` shows `EspectreCore` driving a full-screen
 status page on a FreeInk e-paper device (Xteink X4 by default; swap the
 `-DFREEINK_DEVICE_*` build flag for another supported board) via FreeInk's
-`EInkDisplay` + `FreeInkUI` `DisplayTarget`. It needs a FreeInk SDK checkout
-alongside this repo - see the comments in that example's `platformio.ini`.
+`EInkDisplay` + `FreeInkUI` `DisplayTarget`. The [FreeInk SDK](https://github.com/Free-Ink/freeink-sdk)
+is vendored as a git submodule at `arduino/freeink-sdk`; fetch it with:
+
+```sh
+git submodule update --init arduino/freeink-sdk
+```
+
+(or clone this repo with `git clone --recursive` in the first place).
 
 ## Caveats from the port
 
