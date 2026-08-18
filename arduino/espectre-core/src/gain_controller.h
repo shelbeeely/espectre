@@ -35,16 +35,21 @@ namespace espectre {
 
 /**
  * Gain Lock Mode
- * 
+ *
  * Controls how AGC/FFT gain locking behaves:
  * - AUTO: Enable gain lock but skip if signal too strong (AGC < MIN_SAFE_AGC)
  * - ENABLED: Always force gain lock (may freeze if too close to AP)
- * - DISABLED: Never lock gain (less stable CSI but works at any distance)
+ * - OFF: Never lock gain (less stable CSI but works at any distance)
+ *
+ * Named OFF rather than the upstream ESPHome component's DISABLED: Arduino's
+ * esp32-hal-gpio.h #defines DISABLED as a raw macro (0x00, a GPIO drive-mode
+ * constant), which textually collides with an enumerator of that name once
+ * Arduino.h is in the include chain.
  */
 enum class GainLockMode {
   AUTO,      // Default: enable but skip if signal too strong
   ENABLED,   // Always enable (risk of freeze with strong signal)
-  DISABLED   // Never enable (works everywhere but less stable)
+  OFF        // Never enable (works everywhere but less stable)
 };
 
 // Minimum safe AGC value for gain locking in AUTO mode.
@@ -226,17 +231,17 @@ class GainController {
    * CV normalization (dividing by mean) is needed whenever AGC/FFT are not
    * effectively locked. That includes:
    * - strong-signal AUTO fallback (gain lock skipped)
-   * - explicit DISABLED mode
+   * - explicit OFF mode
    * - platforms that do not expose PHY gain-lock APIs at all
    *
    * In these cases, AGC/FFT can vary dynamically and CV normalization provides
    * stable turbulence values aligned with the training pipeline used for
    * `gain_locked=false` datasets.
-   * 
+   *
    * @return true if CV normalization should be applied
    */
   bool needs_cv_normalization() const {
-    return skip_gain_lock_ || skipped_strong_signal_ || mode_ == GainLockMode::DISABLED;
+    return skip_gain_lock_ || skipped_strong_signal_ || mode_ == GainLockMode::OFF;
   }
   
  private:

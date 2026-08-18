@@ -59,6 +59,12 @@ using motion_state_callback_t = std::function<void(MotionState)>;
 // packet callback.
 using motion_update_callback_t = std::function<void(MotionState state, float movement, uint32_t packets_received)>;
 
+// Which motion-detection algorithm CSIManager should run.
+enum class DetectionAlgorithm {
+  MVS,  // Moving Variance Segmentation (default)
+  ML    // Machine Learning (MLP neural network)
+};
+
 /**
  * Configuration for EspectreCore::begin().
  *

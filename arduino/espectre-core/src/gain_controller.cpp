@@ -32,7 +32,7 @@ void GainController::init(GainLockMode mode) {
   switch (mode) {
     case GainLockMode::AUTO: mode_str = "auto"; break;
     case GainLockMode::ENABLED: mode_str = "enabled"; break;
-    case GainLockMode::DISABLED: mode_str = "disabled"; break;
+    case GainLockMode::OFF: mode_str = "disabled"; break;
   }
   ESP_LOGD(TAG, "Gain controller initialized (mode: %s, %d packets, using median)", 
            mode_str, CALIBRATION_PACKETS);
@@ -76,8 +76,8 @@ void GainController::process_packet(const wifi_csi_info_t* info) {
     packet_count_++;  // Prevent re-entry
     
     // Handle different modes
-    if (mode_ == GainLockMode::DISABLED) {
-      // DISABLED mode: no gain lock, will use CV normalization
+    if (mode_ == GainLockMode::OFF) {
+      // OFF mode: no gain lock, will use CV normalization
       ESP_LOGI(TAG, "Gain baseline: AGC=%d, FFT=%d (no lock, CV normalization enabled)", 
                agc_gain_locked_, fft_gain_locked_);
     } else if (mode_ == GainLockMode::AUTO && agc_gain_locked_ < MIN_SAFE_AGC) {
