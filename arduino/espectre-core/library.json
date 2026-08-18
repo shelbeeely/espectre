@@ -1,0 +1,28 @@
+{
+  "name": "espectre-core",
+  "version": "0.1.0",
+  "description": "Wi-Fi CSI motion detection engine from ESPectre (https://github.com/francescopace/espectre), ported to run standalone on plain Arduino-ESP32 - no ESPHome/Home Assistant required. Exposes CSI capture, gain locking, NBVI band auto-calibration, and MVS/ML motion detectors through a begin()/loop() API for any Arduino/PlatformIO sketch, including FreeInk SDK firmware.",
+  "keywords": ["csi", "wifi", "motion", "detection", "esp32", "presence"],
+  "authors": [
+    {
+      "name": "Francesco Pace",
+      "email": "francesco.pace@gmail.com",
+      "url": "https://github.com/francescopace/espectre"
+    }
+  ],
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/francescopace/espectre.git"
+  },
+  "frameworks": "arduino",
+  "platforms": "espressif32",
+  "build": {
+    "srcFilter": [
+      "+<*.cpp>"
+    ]
+  },
+  "export": {
+    "exclude": ["examples/**/.pio"]
+  }
+}

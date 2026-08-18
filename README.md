@@ -356,6 +356,17 @@ Micro-ESPectre gives you the fundamentals for:
 - **Localization and tracking**
 - **Gesture recognition**
 
+### [espectre-core](arduino/espectre-core/) - Standalone Arduino/PlatformIO Library
+
+**Target**: Developers embedding motion detection in non-ESPHome Arduino firmware
+
+A port of the same CSI capture + MVS/ML detection pipeline used by the
+ESPHome component above, stripped of the ESPHome/Home Assistant integration
+layer and exposed as a plain `begin()`/`loop()` C++ library for any
+Arduino-ESP32/PlatformIO sketch - e.g. firmware built on the
+[FreeInk SDK](https://github.com/Free-Ink/freeink-sdk) e-paper reader
+platform (see `arduino/espectre-core/examples/freeink_motion_display`).
+
 ### Development Flow
 
 ```
